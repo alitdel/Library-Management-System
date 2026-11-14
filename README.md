@@ -127,6 +127,53 @@ return [
 
 Replace `123` with the matching ID from the `books` table and the filename with the locally supplied PDF. Only PDF files stored directly in the protected `digital-books/` directory are supported; direct web access to that directory is denied. The reading page and PDF endpoint require an authenticated session. No database changes are needed.
 
-## 12. Conclusion
+## 12. Pseudocode
+
+```text
+START
+  IF staff is not authenticated THEN
+    request username and password
+    verify credentials
+    IF credentials are invalid THEN
+      show login error
+      STOP
+    ENDIF
+    create authenticated session
+  ENDIF
+
+  display dashboard
+
+  REPEAT while staff is authenticated
+    accept a requested action
+
+    IF action is to manage books THEN
+      add, view, update, or remove book records
+    ELSE IF action is to manage members THEN
+      register, view, update, or remove member records
+    ELSE IF action is to issue a book THEN
+      confirm member exists
+      confirm book exists and has available copies
+      IF all checks pass THEN
+        record the loan and due date
+        reduce the available copy count
+      ELSE
+        show an appropriate error
+      ENDIF
+    ELSE IF action is to return a book THEN
+      find the loan record
+      IF the loan is still borrowed THEN
+        mark it returned and record the return date
+        restore one available copy without exceeding total copies
+      ELSE
+        show an appropriate error
+      ENDIF
+    ELSE IF action is to log out THEN
+      end the session
+    ENDIF
+  END REPEAT
+END
+```
+
+## 13. Conclusion
 
 The Library Management System provides a centralized way to manage library resources, members and borrowing activities using a web-based application.
