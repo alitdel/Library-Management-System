@@ -24,7 +24,7 @@ if (!is_array($digitalBooks)) {
 $path = digitalBookPdfPath((int) $bookId, $digitalBooks);
 if ($path === null) {
     http_response_code(404);
-    exit('No verified digital edition is available for this book.');
+    exit('No verified digital edition is available for this book, try later.');
 }
 
 $handle = fopen($path, 'rb');
